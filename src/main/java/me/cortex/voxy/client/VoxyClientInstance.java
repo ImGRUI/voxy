@@ -17,8 +17,10 @@ import me.cortex.voxy.commonImpl.WorldIdentifier;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.WorldSavePath;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 public class VoxyClientInstance extends VoxyInstance {
     public static boolean isInGame = false;
@@ -123,7 +125,7 @@ public class VoxyClientInstance extends VoxyInstance {
         DEFAULT_STORAGE_CONFIG = config;
     }
 
-    private static Path getBasePath() {
+    public static Path getBasePath() {
         Path basePath = MinecraftClient.getInstance().runDirectory.toPath().resolve(".voxy").resolve("saves");
         var iserver = MinecraftClient.getInstance().getServer();
         if (iserver != null) {
@@ -148,5 +150,17 @@ public class VoxyClientInstance extends VoxyInstance {
             }
         }
         return basePath.toAbsolutePath();
+    }
+    public static void copyDir(Path source, Path target) throws IOException {
+        try (var stream = Files.walk(source)) {
+            stream.forEach(file -> {
+                try {
+                    Files.copy(file, target.resolve(source.relativize(file)), StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException e) {
+                    Logger.warn("Failed to copy", file);
+                }
+            });
+        }
+        Logger.info("Finished copying");
     }
 }
