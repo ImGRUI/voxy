@@ -1,6 +1,7 @@
 package me.cortex.voxy.client.mixin.minecraft;
 
 import me.cortex.voxy.client.ICheekyClientChunkManager;
+import me.cortex.voxy.client.compat.FlashbackCopy;
 import me.cortex.voxy.client.config.VoxyConfig;
 import me.cortex.voxy.common.world.service.VoxelIngestService;
 import net.fabricmc.loader.api.FabricLoader;
@@ -29,7 +30,7 @@ public class MixinClientChunkManager implements ICheekyClientChunkManager {
 
     @Inject(method = "unload", at = @At("HEAD"))
     public void voxy$captureChunkBeforeUnload(ChunkPos pos, CallbackInfo ci) {
-        if (VoxyConfig.CONFIG.ingestEnabled && BOBBY_INSTALLED) {
+        if (VoxyConfig.CONFIG.ingestEnabled && BOBBY_INSTALLED && !FlashbackCopy.FlashbackSaving) {
             var chunk = this.voxy$cheekyGetChunk(pos.x, pos.z);
             if (chunk != null) {
                 VoxelIngestService.tryAutoIngestChunk(chunk);

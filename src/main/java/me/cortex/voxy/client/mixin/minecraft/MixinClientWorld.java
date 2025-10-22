@@ -1,9 +1,8 @@
 package me.cortex.voxy.client.mixin.minecraft;
 
+import me.cortex.voxy.client.compat.FlashbackCopy;
 import me.cortex.voxy.client.config.VoxyConfig;
-import me.cortex.voxy.client.core.IGetVoxyRenderSystem;
 import me.cortex.voxy.common.world.service.VoxelIngestService;
-import me.cortex.voxy.commonImpl.VoxyCommon;
 import me.cortex.voxy.commonImpl.WorldIdentifier;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
@@ -60,6 +59,8 @@ public abstract class MixinClientWorld {
         if (!updated.isAir()) return;
 
         if (!VoxyConfig.CONFIG.ingestEnabled) return;//Only ingest if setting enabled
+
+        if (FlashbackCopy.FlashbackSaving) return;//don't ingest if copying lods
 
         var self = (World)(Object)this;
         var wi = WorldIdentifier.of(self);

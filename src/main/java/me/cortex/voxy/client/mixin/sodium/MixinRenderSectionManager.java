@@ -1,12 +1,12 @@
 package me.cortex.voxy.client.mixin.sodium;
 
 import me.cortex.voxy.client.ICheekyClientChunkManager;
+import me.cortex.voxy.client.compat.FlashbackCopy;
 import me.cortex.voxy.client.config.VoxyConfig;
 import me.cortex.voxy.client.core.IGetVoxyRenderSystem;
 import me.cortex.voxy.client.core.VoxyRenderSystem;
 import me.cortex.voxy.common.world.service.VoxelIngestService;
 import me.cortex.voxy.commonImpl.VoxyCommon;
-import me.cortex.voxy.commonImpl.WorldIdentifier;
 import net.caffeinemc.mods.sodium.client.gl.device.CommandList;
 import net.caffeinemc.mods.sodium.client.render.chunk.RenderSection;
 import net.caffeinemc.mods.sodium.client.render.chunk.RenderSectionManager;
@@ -49,7 +49,7 @@ public class MixinRenderSectionManager {
     @Inject(method = "onChunkRemoved", at = @At("HEAD"))
     private void injectIngest(int x, int z, CallbackInfo ci) {
         //TODO: Am not quite sure if this is right
-        if (VoxyConfig.CONFIG.ingestEnabled && !BOBBY_INSTALLED) {
+        if (VoxyConfig.CONFIG.ingestEnabled && !BOBBY_INSTALLED && !FlashbackCopy.FlashbackSaving) {
             var cccm = (ICheekyClientChunkManager)this.level.getChunkManager();
             if (cccm != null) {
                 var chunk = cccm.voxy$cheekyGetChunk(x, z);
@@ -63,7 +63,7 @@ public class MixinRenderSectionManager {
 
     @Inject(method = "onChunkAdded", at = @At("HEAD"))
     private void voxy$ingestOnAdd(int x, int z, CallbackInfo ci) {
-        if (this.level.worldRenderer != null && VoxyConfig.CONFIG.ingestEnabled) {
+        if (this.level.worldRenderer != null && VoxyConfig.CONFIG.ingestEnabled && !FlashbackCopy.FlashbackSaving) {
             var cccm = this.level.getChunkManager();
             if (cccm != null) {
                 var chunk = cccm.getChunk(x, z, ChunkStatus.FULL, false);

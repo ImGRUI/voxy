@@ -2,6 +2,7 @@ package me.cortex.voxy.commonImpl.mixin.chunky;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import me.cortex.voxy.client.compat.FlashbackCopy;
 import me.cortex.voxy.common.world.service.VoxelIngestService;
 import net.minecraft.server.world.OptionalChunk;
 import net.minecraft.world.chunk.Chunk;
@@ -24,7 +25,7 @@ public class MixinFabricWorld {
         } else {
             return future.thenApply(res -> {
                 res.ifPresent(chunk -> {
-                    if (chunk instanceof WorldChunk worldChunk) {
+                    if (chunk instanceof WorldChunk worldChunk && !FlashbackCopy.FlashbackSaving) {
                         VoxelIngestService.tryAutoIngestChunk(worldChunk);
                     }
                 });
