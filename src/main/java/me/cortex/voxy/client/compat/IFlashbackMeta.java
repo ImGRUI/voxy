@@ -5,4 +5,6 @@ import java.io.File;
 public interface IFlashbackMeta {
     void setVoxyPath(File path);
     File getVoxyPath();
+    void setVoxySavedLods(boolean savedLods);
+    boolean getVoxySavedLods();
 }
