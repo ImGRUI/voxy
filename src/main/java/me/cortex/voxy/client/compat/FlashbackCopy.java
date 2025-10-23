@@ -24,7 +24,6 @@ public class FlashbackCopy {
     public static boolean FlashbackSaving = false;
     public static String replayIdentifier;
     public static Path basePath;
-    public static boolean oldReplay = false;
 
     public static void copyDir(Path source, Path target) {
         try (var stream = Files.walk(source)) {
@@ -74,8 +73,6 @@ public class FlashbackCopy {
         } catch (IOException e) {
             Logger.warn("Failed to copy config.json", basePath);
         }
-        IDENTIFIERS.clear();
-        basePath = null;
         FlashbackSaving = false;
     }
 
