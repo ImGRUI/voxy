@@ -3,6 +3,7 @@ package me.cortex.voxy.client.mixin.flashback;
 import com.moulberry.flashback.record.FlashbackMeta;
 import com.moulberry.flashback.record.Recorder;
 import me.cortex.voxy.client.VoxyClientInstance;
+import me.cortex.voxy.client.compat.FlashbackCopy;
 import me.cortex.voxy.client.compat.IFlashbackMeta;
 import me.cortex.voxy.commonImpl.VoxyCommon;
 import me.cortex.voxy.commonImpl.WorldIdentifier;
@@ -16,8 +17,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-
-import static me.cortex.voxy.client.compat.FlashbackCopy.IDENTIFIERS;
 
 @Mixin(value = Recorder.class, remap = false)
 public class MixinFlashbackRecorder {
@@ -39,14 +38,14 @@ public class MixinFlashbackRecorder {
             World world1 = MinecraftClient.getInstance().world;
             WorldIdentifier identifier1 = WorldIdentifier.of(world1);
             if (identifier1 != null) {
-                IDENTIFIERS.add(identifier1.getWorldId());
+                FlashbackCopy.IDENTIFIERS.add(identifier1.getWorldId());
             }
         }
         if (changedDimensions) {
             World world1 = MinecraftClient.getInstance().world;
             WorldIdentifier identifier1 = WorldIdentifier.of(world1);
             if (identifier1 != null) {
-                IDENTIFIERS.add(identifier1.getWorldId());
+                FlashbackCopy.IDENTIFIERS.add(identifier1.getWorldId());
             }
         }
     }

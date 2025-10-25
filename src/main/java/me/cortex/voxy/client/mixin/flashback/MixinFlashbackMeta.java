@@ -2,10 +2,12 @@ package me.cortex.voxy.client.mixin.flashback;
 
 import com.google.gson.JsonObject;
 import com.moulberry.flashback.record.FlashbackMeta;
+import com.moulberry.flashback.screen.EditReplayScreen;
 import me.cortex.voxy.client.compat.FlashbackCopy;
 import me.cortex.voxy.client.compat.IFlashbackMeta;
 import me.cortex.voxy.client.config.VoxyConfig;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -50,7 +52,18 @@ public class MixinFlashbackMeta implements IFlashbackMeta {
         if (val != null && this.voxyPath != null) {
             FlashbackCopy.replayIdentifier = replayIdentifier.toString();
             FlashbackCopy.basePath = getVoxyPath().toPath();
-            if (VoxyConfig.CONFIG.saveOldLODs || getVoxySavedLods()) {
+            Screen screen = MinecraftClient.getInstance().currentScreen;
+            if (screen instanceof EditReplayScreen) {
+                if (getVoxySavedLods()) {
+                    Path copyPath = MinecraftClient.getInstance().runDirectory.toPath().resolve(".voxy").resolve("flashback").resolve(replayIdentifier.toString());
+                    val.addProperty("voxy_storage_path", copyPath.toString());
+                    val.addProperty("voxy_copied_lods", true);
+                } else {
+                    val.addProperty("voxy_storage_path", this.voxyPath.getAbsoluteFile().getPath());
+                }
+                return;
+            }
+            if (VoxyConfig.CONFIG.saveOldLODs) {
                 Path copyPath = MinecraftClient.getInstance().runDirectory.toPath().resolve(".voxy").resolve("flashback").resolve(replayIdentifier.toString());
                 val.addProperty("voxy_storage_path", copyPath.toString());
                 val.addProperty("voxy_copied_lods", true);
@@ -67,8 +80,10 @@ public class MixinFlashbackMeta implements IFlashbackMeta {
             if (meta.has("voxy_storage_path")) {
                 ((IFlashbackMeta)val).setVoxyPath(new File(meta.get("voxy_storage_path").getAsString()));
             }
-            if (meta.has("voxy_saved_lods")) {
-                ((IFlashbackMeta)val).setVoxySavedLods(meta.get("voxy_saved_lods").getAsBoolean());
+            if (meta.has("voxy_copied_lods")) {
+                ((IFlashbackMeta)val).setVoxySavedLods(meta.get("voxy_copied_lods").getAsBoolean());
+            } else {
+                ((IFlashbackMeta)val).setVoxySavedLods(false);
             }
         }
     }
