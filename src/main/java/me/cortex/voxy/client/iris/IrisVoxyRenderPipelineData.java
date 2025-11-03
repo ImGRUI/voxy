@@ -273,7 +273,12 @@ public class IrisVoxyRenderPipelineData {
 
     private static CachedUniform[] createUniformSet(CustomUniforms cu, IrisShaderPatch patch) {
         //This is a fking awful hack... but it works thinks
-        LocationalUniformHolder uniformBuilder = new LocationalUniformHolder() {
+        DynamicLocationalUniformHolder uniformBuilder = new DynamicLocationalUniformHolder() {
+            @Override
+            public DynamicLocationalUniformHolder addDynamicUniform(Uniform uniform, ValueUpdateNotifier valueUpdateNotifier) {
+                return this;
+            }
+
             @Override
             public LocationalUniformHolder addUniform(UniformUpdateFrequency uniformUpdateFrequency, Uniform uniform) {
                 return this;
@@ -296,6 +301,7 @@ public class IrisVoxyRenderPipelineData {
                 return null;
             }
         };
+        //CommonUniforms.addDynamicUniforms(uniformBuilder, FogMode.PER_FRAGMENT);
         cu.assignTo(uniformBuilder);
         cu.mapholderToPass(uniformBuilder, patch);
 
@@ -305,7 +311,7 @@ public class IrisVoxyRenderPipelineData {
         int j = 0;
         for (var uniform : uniforms) {
             if (uniform == null) {
-                Logger.error("Unknown uniform at location "+j + " skipping");
+                Logger.error("Unknown uniform at location "+j + " skipping, uniform name: " + patch.getUniformList()[j]);
             } else {
                 uniforms[i++] = uniform;//This shuffles the uniforms down till its compacted
             }
