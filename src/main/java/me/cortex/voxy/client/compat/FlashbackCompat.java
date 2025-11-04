@@ -29,10 +29,10 @@ public class FlashbackCompat {
                 if (path != null) {
                     Logger.info("Flashback replay server exists and meta exists");
                     if (path.exists()) {
-                        Logger.info("Flashback voxy path exists in filesystem, using this as lod data source");
+                        Logger.info("Flashback Voxy path exists in filesystem, using this as LoD data source");
                         return path.toPath();
                     } else {
-                        Logger.warn("Flashback meta had voxy path saved but path doesnt exist");
+                        Logger.warn("Flashback meta had Voxy path saved but path doesn't exist");
                     }
                 }
             }

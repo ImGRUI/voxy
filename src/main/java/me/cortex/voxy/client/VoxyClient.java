@@ -12,6 +12,8 @@ import java.util.HashSet;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import static me.cortex.voxy.client.compat.FlashbackCopy.CheckReplays;
+
 public class VoxyClient implements ClientModInitializer {
     private static final HashSet<String> FREX = new HashSet<>();
 
@@ -50,6 +52,8 @@ public class VoxyClient implements ClientModInitializer {
                 } else {
                     FREX.remove(name);
                 }}));
+
+        CheckReplays();
     }
 
     public static boolean isFrexActive() {

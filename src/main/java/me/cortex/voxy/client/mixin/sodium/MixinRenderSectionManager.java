@@ -1,6 +1,7 @@
 package me.cortex.voxy.client.mixin.sodium;
 
 import me.cortex.voxy.client.ICheekyClientChunkCache;
+import me.cortex.voxy.client.compat.FlashbackCopy;
 import me.cortex.voxy.client.config.VoxyConfig;
 import me.cortex.voxy.client.core.IGetVoxyRenderSystem;
 import me.cortex.voxy.client.core.VoxyRenderSystem;
@@ -51,7 +52,7 @@ public class MixinRenderSectionManager {
     @Inject(method = "onChunkRemoved", at = @At("HEAD"))
     private void injectIngest(int x, int z, CallbackInfo ci) {
         //TODO: Am not quite sure if this is right
-        if (VoxyConfig.CONFIG.ingestEnabled && !BOBBY_INSTALLED) {
+        if (VoxyConfig.CONFIG.ingestEnabled && !BOBBY_INSTALLED && !FlashbackCopy.FlashbackSaving) {
             var cccm = (ICheekyClientChunkCache)this.level.getChunkSource();
             if (cccm != null) {
                 var chunk = cccm.voxy$cheekyGetChunk(x, z);
@@ -65,7 +66,7 @@ public class MixinRenderSectionManager {
 
     @Inject(method = "onChunkAdded", at = @At("HEAD"))
     private void voxy$ingestOnAdd(int x, int z, CallbackInfo ci) {
-        if (this.level.levelRenderer != null && VoxyConfig.CONFIG.ingestEnabled) {
+        if (this.level.levelRenderer != null && VoxyConfig.CONFIG.ingestEnabled && !FlashbackCopy.FlashbackSaving) {
             var cccm = this.level.getChunkSource();
             if (cccm != null) {
                 var chunk = cccm.getChunk(x, z, ChunkStatus.FULL, false);
