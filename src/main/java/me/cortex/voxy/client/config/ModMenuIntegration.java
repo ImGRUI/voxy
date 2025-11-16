@@ -21,7 +21,7 @@ public class ModMenuIntegration implements ModMenuApi {
                     field.set(screen, VoxyConfigScreenPages.voxyOptionPage);
                     field.setAccessible(false);
                 } catch (Exception e) {
-                    Logger.error("Failed to set the current page to voxy", e);
+                    Logger.error("Failed to set the current page to Voxy", e);
                 }
                 return screen;
             } else {

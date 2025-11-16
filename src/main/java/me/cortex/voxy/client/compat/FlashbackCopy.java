@@ -113,7 +113,7 @@ public class FlashbackCopy {
                         }
                     });
         } catch (IOException e) {
-            Logger.warn("Failed to walk flashback LODs files");
+            Logger.warn("Failed to walk flashback LoDs files");
         }
     }
 
@@ -130,7 +130,7 @@ public class FlashbackCopy {
                 }
             }
         } catch (IOException e) {
-            Logger.warn("Failed to read LOD location from", zipPath);
+            Logger.warn("Failed to read LoD location from", zipPath);
         }
         return null;
     }

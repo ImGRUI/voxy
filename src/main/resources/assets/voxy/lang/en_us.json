@@ -25,6 +25,9 @@
   "voxy.config.general.environmental_fog": "Enable environmental fog",
   "voxy.config.general.environmental_fog.tooltip": "Enables or disables Voxy rendering environmental fog",
 
+  "voxy.config.general.fix_nether_fog": "Enable nether fog fix",
+  "voxy.config.general.fix_nether_fog.tooltip": "Enables or disables fix for nether fog with environmental fog enabled",
+
   "voxy.config.general.vanilla_fog": "Enable vanilla fog",
   "voxy.config.general.vanilla_fog.tooltip": "Enables or disables vanilla fog effect",
 

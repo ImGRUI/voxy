@@ -35,6 +35,7 @@ public class VoxyConfig implements OptionStorage<VoxyConfig> {
     public boolean renderStatistics = false;
     public boolean dontUseSodiumBuilderThreads = false;
     public boolean saveOldLoDs = false;
+    public boolean fixNetherFog = true;
 
     private static VoxyConfig loadOrCreate() {
         if (VoxyCommon.isAvailable()) {
@@ -46,7 +47,7 @@ public class VoxyConfig implements OptionStorage<VoxyConfig> {
                         conf.save();
                         return conf;
                     } else {
-                        Logger.error("Failed to load voxy config, resetting");
+                        Logger.error("Failed to load Voxy config, resetting");
                     }
                 } catch (IOException e) {
                     Logger.error("Could not parse config", e);
