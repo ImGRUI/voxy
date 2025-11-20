@@ -33,9 +33,10 @@ public class MixinLevelRenderer {
             Camera camera,
             Matrix4f positionMatrix,
             Matrix4f projectionMatrix,
-            GpuBufferSlice fog,
+            Matrix4f basicProjectionMatrix,
+            GpuBufferSlice fogBuffer,
             Vector4f fogColor,
-            boolean shouldRenderSky,
+            boolean renderSky,
             CallbackInfo ci) {
         if (IrisUtil.irisShaderPackEnabled()) {
             var renderer = ((IGetVoxyRenderSystem) this).getVoxyRenderSystem();
