@@ -28,6 +28,9 @@ public class FlashbackCopy {
     public static void copyDir(Path source, Path target) {
         try (var stream = Files.walk(source)) {
             stream.forEach(file -> {
+                if (file.toString().contains("LOG")) {
+                    return;
+                }
                 try {
                     Files.createDirectories(target);
                     Files.copy(file, target.resolve(source.relativize(file)), StandardCopyOption.REPLACE_EXISTING);
