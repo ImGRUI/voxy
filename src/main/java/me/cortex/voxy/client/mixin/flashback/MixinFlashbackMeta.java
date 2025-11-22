@@ -82,8 +82,10 @@ public class MixinFlashbackMeta implements IFlashbackMeta {
             }
             if (meta.has("voxy_copied_lods")) {
                 ((IFlashbackMeta)val).setVoxySavedLods(meta.get("voxy_copied_lods").getAsBoolean());
+                FlashbackCopy.voxySavedLods = meta.get("voxy_copied_lods").getAsBoolean();
             } else {
                 ((IFlashbackMeta)val).setVoxySavedLods(false);
+                FlashbackCopy.voxySavedLods = false;
             }
         }
     }

@@ -98,6 +98,12 @@ public abstract class VoxyConfigScreenPages {
                         .setControl(TickBoxControl::new)
                         .setBinding((s, v) -> s.saveOldLoDs = v, s -> s.saveOldLoDs)
                         .build()
+                ).add(OptionImpl.createBuilder(boolean.class, storage)
+                        .setName(Component.translatable("voxy.config.general.flashback_ingest"))
+                        .setTooltip(Component.translatable("voxy.config.general.flashback_ingest.tooltip"))
+                        .setControl(TickBoxControl::new)
+                        .setBinding((s, v) -> s.flashbackIngest = v, s -> s.flashbackIngest)
+                        .build()
                 ).build()
         );
 
