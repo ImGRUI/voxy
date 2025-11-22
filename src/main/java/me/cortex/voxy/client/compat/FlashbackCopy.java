@@ -24,6 +24,7 @@ public class FlashbackCopy {
     public static boolean FlashbackSaving = false;
     public static String replayIdentifier;
     public static Path basePath;
+    public static boolean voxySavedLods;
 
     public static void copyDir(Path source, Path target) {
         try (var stream = Files.walk(source)) {

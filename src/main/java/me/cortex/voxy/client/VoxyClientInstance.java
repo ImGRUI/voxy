@@ -1,6 +1,7 @@
 package me.cortex.voxy.client;
 
 import me.cortex.voxy.client.compat.FlashbackCompat;
+import me.cortex.voxy.client.compat.FlashbackCopy;
 import me.cortex.voxy.client.config.VoxyConfig;
 import me.cortex.voxy.client.mixin.sodium.AccessorSodiumWorldRenderer;
 import me.cortex.voxy.common.Logger;
@@ -30,7 +31,11 @@ public class VoxyClientInstance extends VoxyInstance {
     public VoxyClientInstance() {
         super();
         var path = FlashbackCompat.getReplayStoragePath();
-        this.noIngestOverride = path != null;
+        if (VoxyConfig.CONFIG.flashbackIngest) {
+            this.noIngestOverride = path != null && !FlashbackCopy.voxySavedLods;
+        } else {
+            this.noIngestOverride = path != null;
+        }
         if (path == null) {
             path = getBasePath();
         }

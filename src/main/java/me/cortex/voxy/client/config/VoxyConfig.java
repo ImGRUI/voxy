@@ -36,6 +36,7 @@ public class VoxyConfig implements OptionStorage<VoxyConfig> {
     public boolean dontUseSodiumBuilderThreads = false;
     public boolean saveOldLoDs = false;
     public boolean fixNetherFog = true;
+    public boolean flashbackIngest = true;
 
     private static VoxyConfig loadOrCreate() {
         if (VoxyCommon.isAvailable()) {

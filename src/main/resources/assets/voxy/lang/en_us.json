@@ -35,5 +35,8 @@
   "voxy.config.general.render_statistics.tooltip": "Enable render statistics in F3 menu, useful for debugging",
 
   "voxy.config.general.save_flashback": "Enable saving LoDs with Flashback replays",
-  "voxy.config.general.save_flashback.tooltip": "Enables copying LoDs to special Flashback folder (doesn't support combining replays)"
+  "voxy.config.general.save_flashback.tooltip": "Enables copying LoDs to special Flashback folder (doesn't support combining replays)",
+
+  "voxy.config.general.flashback_ingest": "Ingest in Flashback replays",
+  "voxy.config.general.flashback_ingest.tooltip": "Enables ingesting in compatible Flashback replays (which have LoDs copied)"
 }
