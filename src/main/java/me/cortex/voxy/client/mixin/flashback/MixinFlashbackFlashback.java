@@ -15,4 +15,9 @@ public class MixinFlashbackFlashback {
         if (VoxyConfig.CONFIG.saveOldLoDs) FlashbackCopy.CopyLods();
         FlashbackCopy.IDENTIFIERS.clear();
     }
+
+    @Inject(method = "cancelRecordingReplay()V", at = @At("TAIL"))
+    private static void voxy$deleteIdentifiers(CallbackInfo ci) {
+        FlashbackCopy.IDENTIFIERS.clear();
+    }
 }
