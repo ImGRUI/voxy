@@ -1,5 +1,6 @@
 package me.cortex.voxy.client;
 
+import me.cortex.voxy.client.compat.FlashbackCopy;
 import me.cortex.voxy.client.core.gl.Capabilities;
 import me.cortex.voxy.client.core.model.bakery.BudgetBufferRenderer;
 import me.cortex.voxy.client.core.rendering.util.SharedIndexBuffer;
@@ -11,8 +12,6 @@ import net.fabricmc.loader.api.FabricLoader;
 import java.util.HashSet;
 import java.util.function.Consumer;
 import java.util.function.Function;
-
-import static me.cortex.voxy.client.compat.FlashbackCopy.CheckReplays;
 
 public class VoxyClient implements ClientModInitializer {
     private static final HashSet<String> FREX = new HashSet<>();
@@ -53,7 +52,7 @@ public class VoxyClient implements ClientModInitializer {
                     FREX.remove(name);
                 }}));
 
-        CheckReplays();
+        FlashbackCopy.CheckReplays();
     }
 
     public static boolean isFrexActive() {

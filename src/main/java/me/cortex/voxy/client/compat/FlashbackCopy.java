@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import me.cortex.voxy.common.Logger;
 import net.minecraft.client.Minecraft;
+import org.apache.commons.io.FileUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,7 +27,7 @@ public class FlashbackCopy {
     public static Path basePath;
     public static boolean voxySavedLods;
 
-    public static void copyDir(Path source, Path target) {
+    private static void copyDir(Path source, Path target) {
         try (var stream = Files.walk(source)) {
             stream.forEach(file -> {
                 if (file.toString().contains("LOG")) {
@@ -44,7 +45,7 @@ public class FlashbackCopy {
         }
     }
 
-    public static void deleteDir(Path deleteDir) {
+    private static void deleteDir(Path deleteDir) {
         try (var stream = Files.walk(deleteDir)) {
             stream
                     .sorted(Comparator.reverseOrder())
@@ -63,9 +64,10 @@ public class FlashbackCopy {
     public static void CopyLods() {
         Path copyPath = Minecraft.getInstance().gameDirectory.toPath().resolve(".voxy").resolve("flashback").resolve(replayIdentifier).toAbsolutePath();
         CopyLods(basePath, copyPath);
+        Logger.warn("Copied LoDs for", replayIdentifier);
     }
 
-    public static void CopyLods(Path basePath, Path copyPath) {
+    private static void CopyLods(Path basePath, Path copyPath) {
         FlashbackSaving = true;
         for (String worldId : IDENTIFIERS) {
             Path newBasePath = basePath.resolve(worldId);
@@ -109,7 +111,7 @@ public class FlashbackCopy {
                         try {
                             if (!flashbackLodFolders.contains(path)) {
                                 // delete system (32)
-                                FlashbackCopy.deleteDir(path);
+                                deleteDir(path);
                                 Logger.warn("Deleted permanently", path);
                             }
                         } catch (Exception e) {
@@ -118,6 +120,16 @@ public class FlashbackCopy {
                     });
         } catch (IOException e) {
             Logger.warn("Failed to walk flashback LoDs files");
+        }
+    }
+
+    public static void deleteReplayLOD() {
+        Path flashbackLod = Minecraft.getInstance().gameDirectory.toPath().resolve(".voxy").resolve("flashback").resolve(replayIdentifier).toAbsolutePath();
+        try {
+            FileUtils.deleteDirectory(flashbackLod.toFile());
+            Logger.warn("Deleted Replay LoD", replayIdentifier);
+        } catch (IOException e) {
+            Logger.error("Failed to delete Replay LoD", replayIdentifier);
         }
     }
 
