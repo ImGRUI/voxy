@@ -5,7 +5,6 @@ import com.moulberry.flashback.record.Recorder;
 import me.cortex.voxy.client.VoxyClientInstance;
 import me.cortex.voxy.client.compat.FlashbackCopy;
 import me.cortex.voxy.client.compat.IFlashbackMeta;
-import me.cortex.voxy.common.Logger;
 import me.cortex.voxy.commonImpl.VoxyCommon;
 import me.cortex.voxy.commonImpl.WorldIdentifier;
 import net.minecraft.client.Minecraft;
