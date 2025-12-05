@@ -6,6 +6,7 @@
     "flashback.MixinFlashbackFlashback",
     "flashback.MixinFlashbackMeta",
     "flashback.MixinFlashbackRecorder",
+    "flashback.MixinFlashbackSaveReplayScreen",
     "iris.MixinLevelRenderer",
     "iris.MixinPackRenderTargetDirectives",
     "iris.CustomUniformsAccessor",

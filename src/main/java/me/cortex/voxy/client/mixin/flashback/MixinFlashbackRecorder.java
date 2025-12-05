@@ -5,6 +5,7 @@ import com.moulberry.flashback.record.Recorder;
 import me.cortex.voxy.client.VoxyClientInstance;
 import me.cortex.voxy.client.compat.FlashbackCopy;
 import me.cortex.voxy.client.compat.IFlashbackMeta;
+import me.cortex.voxy.common.Logger;
 import me.cortex.voxy.commonImpl.VoxyCommon;
 import me.cortex.voxy.commonImpl.WorldIdentifier;
 import net.minecraft.client.Minecraft;
@@ -21,6 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(value = Recorder.class, remap = false)
 public class MixinFlashbackRecorder {
     @Shadow private volatile boolean needsInitialSnapshot;
+    @Shadow private volatile boolean isPaused;
     @Shadow @Final private FlashbackMeta metadata;
 
     @Inject(method = "<init>", at = @At("TAIL"))
@@ -34,14 +36,7 @@ public class MixinFlashbackRecorder {
     }
     @Inject(method = "endTick", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILSOFT)
     private void voxy$getDimensionChange(boolean close, CallbackInfo ci, Minecraft minecraft, boolean isLevelLoaded, boolean changedDimensions) {
-        if (!needsInitialSnapshot) {
-            Level level1 = Minecraft.getInstance().level;
-            WorldIdentifier identifier1 = WorldIdentifier.of(level1);
-            if (identifier1 != null) {
-                FlashbackCopy.IDENTIFIERS.add(identifier1.getWorldId());
-            }
-        }
-        if (changedDimensions) {
+        if (!needsInitialSnapshot && !isPaused) {
             Level level1 = Minecraft.getInstance().level;
             WorldIdentifier identifier1 = WorldIdentifier.of(level1);
             if (identifier1 != null) {
