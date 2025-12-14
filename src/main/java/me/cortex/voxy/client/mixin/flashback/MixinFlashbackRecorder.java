@@ -16,7 +16,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(value = Recorder.class, remap = false)
 public class MixinFlashbackRecorder {
@@ -33,8 +32,8 @@ public class MixinFlashbackRecorder {
             }
         }
     }
-    @Inject(method = "endTick", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void voxy$getDimensionChange(boolean close, CallbackInfo ci, Minecraft minecraft, boolean isLevelLoaded, boolean changedDimensions) {
+    @Inject(method = "endTick", at = @At("TAIL"))
+    private void voxy$getDimensionChange(boolean close, CallbackInfo ci) {
         if (!needsInitialSnapshot && !isPaused) {
             Level level1 = Minecraft.getInstance().level;
             WorldIdentifier identifier1 = WorldIdentifier.of(level1);
