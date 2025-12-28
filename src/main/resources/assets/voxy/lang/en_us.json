@@ -38,5 +38,11 @@
   "voxy.config.general.save_flashback.tooltip": "Enables copying LoDs to special Flashback folder (doesn't support combining replays). If turned off, LoDs location will be written to metadata instead, which can't be ingested in the replay.",
 
   "voxy.config.general.flashback_ingest": "Ingest in Flashback replays",
-  "voxy.config.general.flashback_ingest.tooltip": "Enables ingesting in compatible Flashback replays (which have LoDs copied)"
+  "voxy.config.general.flashback_ingest.tooltip": "Enables ingesting in compatible Flashback replays (which have LoDs copied)",
+
+  "voxy.config.general.customfog": "Enable EnvironmentalEnd override",
+  "voxy.config.general.customfog.tooltip": "Enables tweaking EnvironmentalEnd by slider",
+
+  "voxy.config.general.customfog_env": "EnvironmentalEnd",
+  "voxy.config.general.customfog_env.tooltip": "EnvironmentalEnd slider (higher is less foggy)"
 }

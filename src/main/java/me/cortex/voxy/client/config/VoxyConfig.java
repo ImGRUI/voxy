@@ -37,6 +37,8 @@ public class VoxyConfig implements OptionStorage<VoxyConfig> {
     public boolean saveOldLoDs = false;
     public boolean fixNetherFog = true;
     public boolean flashbackIngest = true;
+    public boolean customFog = false;
+    public int environmentalEnd = 500;
 
     private static VoxyConfig loadOrCreate() {
         if (VoxyCommon.isAvailable()) {
