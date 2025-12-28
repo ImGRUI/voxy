@@ -28,6 +28,9 @@ public abstract class MixinFogRenderer {
         } else {
             instance.renderDistanceStart = 999999999;
             instance.renderDistanceEnd = 999999999;
+            if (VoxyConfig.CONFIG.customFog && fogType == FogType.ATMOSPHERIC) {
+                instance.environmentalEnd = VoxyConfig.CONFIG.environmentalEnd;
+            }
             if (fogType == FogType.DIMENSION_OR_BOSS && VoxyConfig.CONFIG.fixNetherFog && VoxyConfig.CONFIG.useEnvironmentalFog) {
                 instance.environmentalStart = 1;
                 instance.environmentalEnd = 99999999;
