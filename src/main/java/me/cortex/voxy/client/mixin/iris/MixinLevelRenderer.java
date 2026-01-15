@@ -33,7 +33,6 @@ public class MixinLevelRenderer {
             Camera camera,
             Matrix4f positionMatrix,
             Matrix4f projectionMatrix,
-            Matrix4f basicProjectionMatrix,
             GpuBufferSlice fogBuffer,
             Vector4f fogColor,
             boolean renderSky,
